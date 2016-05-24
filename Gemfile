@@ -13,6 +13,9 @@ gem 'active_model_serializers', '~> 0.10.0.rc5'
 # WebServer
 gem 'puma', '~> 3.0'
 
+# Cross-Origin Resource Sharing
+gem 'rack-cors', '~> 0.4.0'
+
 # Other
 gem 'bcrypt', '~> 3.1'
 

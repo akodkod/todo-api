@@ -31,9 +31,9 @@ class UsersController < ApplicationController
 
   def login
     if login_user.present? && login_user.authenticate(params[:password])
-      render json: { id: login_user.id, api_key: login_user.api_key }
+      render json: login_user, serializer: UserLoginSerializer
     else
-      render json: { status: 400 }, status: :bad_request
+      render json: { status: 400, errors: { base: :wrong_credentials } }, status: :bad_request
     end
   end
 

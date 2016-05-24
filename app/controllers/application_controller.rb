@@ -11,7 +11,7 @@ class ApplicationController < ActionController::API
 
   def current_user
     return @current_user if defined?(@current_user)
-    @current_user = User.find_by(api_key: params[:api_key])
+    @current_user = User.find_by(api_key: params[:api_key] || request.headers['X-API-KEY'])
   end
 
   def authentication_required!
@@ -19,7 +19,7 @@ class ApplicationController < ActionController::API
   end
 
   def non_authentication_required!
-    !current_user or raise Exception::Authorization::OnlyForGuests
+    !current_user or raise Exceptions::Authorization::OnlyForGuests
   end
 
   def render_errors(object, options = {})

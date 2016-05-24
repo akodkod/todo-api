@@ -27,9 +27,12 @@ module Todos
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    # Access-Control-Allow-Origin
-    config.action_dispatch.default_headers = {
-      'Access-Control-Allow-Origin' => '*'
-    }
+    # Cross-Origin Resource Sharing
+    config.middleware.insert_before 0, 'Rack::Cors' do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :patch, :delete]
+      end
+    end
   end
 end
