@@ -1,6 +1,5 @@
 class TodosController < ApplicationController
   # Callbacks
-  before_action :check_permissions
   before_action :authorize_resource!
 
   def index
@@ -53,17 +52,5 @@ class TodosController < ApplicationController
     params
         .require(:todo).permit(:text, :done)
         .merge(user_id: current_user.id)
-  end
-
-  def check_permissions
-    return unless action_name.in? %w(create update destroy)
-    authentication_required!
-
-    case action_name.to_sym
-    when :create
-      authorize! action_name.to_sym, Todo
-    when :update, :destroy
-      authorize! action_name.to_sym, todo
-    end
   end
 end
